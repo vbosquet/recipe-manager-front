@@ -1,0 +1,18 @@
+<form name="authForm" role="form" novalidate [formGroup]="authForm">
+  <div class="mb-3">
+    <label for="field_email">Email</label>
+    <input type="text" class="form-control" name="email" id="field_email"
+           formControlName="email" placeholder="Your email"/>
+  </div>
+  <div class="mb-3">
+    <label for="field_password">Password</label>
+    <input type="password" class="form-control" name="password" id="field_password"
+           formControlName="password" placeholder="Your password"/>
+  </div>
+  <div class="mb-3">
+    <label for="field_password_confirmation">Password Confirmation</label>
+    <input type="password" name="passwordConfirmation" class="form-control" id="field_password_confirmation"
+           formControlName="passwordConfirmation" placeholder="Confirm your password"/>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="onSignUpSubmit()" [disabled]="authForm.invalid">Login</button>
+</form>

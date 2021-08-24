@@ -9,13 +9,5 @@ import { AngularTokenService } from "angular-token";
 export class AppComponent {
   title = 'baby-shop-front';
 
-  constructor(public tokenService: AngularTokenService) {
-    this.tokenService.signIn({
-      login:    'user@example.com',
-      password: 'monkey67'
-    }).subscribe(
-      res =>      console.log(res),
-      error =>    console.log(error)
-    );
-  }
+  constructor() {}
 }

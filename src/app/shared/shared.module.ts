@@ -8,21 +8,16 @@ import { LoginComponent } from './auth-dialog/login/login.component';
 
 import { MenubarModule } from "primeng/menubar";
 import { DialogModule } from 'primeng/dialog';
-import { PasswordModule } from 'primeng/password';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
+import { RegisterComponent } from './auth-dialog/register/register.component';
 
 @NgModule({
-  declarations: [ToolbarComponent, AuthDialogComponent, LoginComponent],
+  declarations: [ToolbarComponent, AuthDialogComponent, LoginComponent, RegisterComponent],
   imports: [
     CommonModule,
     MenubarModule,
     DialogModule,
-    PasswordModule,
-    InputTextModule,
-    ButtonModule,
     ReactiveFormsModule
   ],
-  exports: [ToolbarComponent]
+  exports: [ToolbarComponent, AuthDialogComponent, LoginComponent, RegisterComponent]
 })
 export class SharedModule { }

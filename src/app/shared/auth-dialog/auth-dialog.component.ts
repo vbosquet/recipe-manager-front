@@ -31,4 +31,16 @@ export class AuthDialogComponent implements OnInit {
   isRegisterMode(){
     return this.authMode == 'register'
   }
+
+  onLoginFormResult($event: any) {
+    if ($event.signedIn) {
+      this.display = false;
+    }
+  }
+
+  onRegisterFormResult($event: any) {
+    if ($event.signedUp) {
+      this.display = false;
+    }
+  }
 }

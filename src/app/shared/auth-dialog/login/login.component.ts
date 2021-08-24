@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {AngularTokenService, SignInData} from "angular-token";
 
@@ -7,7 +7,7 @@ import {AngularTokenService, SignInData} from "angular-token";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnChanges {
 
   signInUser: SignInData = {
     login: '',
@@ -19,10 +19,18 @@ export class LoginComponent implements OnInit {
     email: [null, [Validators.required]]
   });
 
+  @Input() displayDialog: boolean = false;
   @Output() onFormResult = new EventEmitter<any>();
+
   constructor(private fb: FormBuilder, private tokenService: AngularTokenService) {}
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.displayDialog) {
+      this.authForm.reset();
+    }
   }
 
   onSignInSubmit() {

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 
 import { MenuItem } from 'primeng/api';
 import { AuthDialogComponent } from "../auth-dialog/auth-dialog.component";
+import {AngularTokenService} from "angular-token";
 
 
 @Component({
@@ -11,12 +12,15 @@ import { AuthDialogComponent } from "../auth-dialog/auth-dialog.component";
 })
 export class ToolbarComponent implements OnInit {
 
-  items: MenuItem[];
+  loggedInItems: MenuItem[];
+  loggedOutItems: MenuItem[];
+  isUserSignedIn: boolean = false;
 
   @ViewChild('authDialog', { static: false }) authDialog!: AuthDialogComponent;
 
-  constructor() {
-    this.items = [
+  constructor(private tokenService: AngularTokenService) {
+    this.isUserSignedIn = tokenService.userSignedIn();
+    this.loggedOutItems = [
       {
         label: 'Login', command: event => {
           this.presentAuthDialog();
@@ -28,6 +32,18 @@ export class ToolbarComponent implements OnInit {
         }
       }
     ];
+
+    this.loggedInItems = [
+      {
+        label: 'Profile'
+      },
+      {
+        label: 'Sign Out', command: event => {
+          this.onSignOutClicked();
+        }
+
+      }
+    ];
   }
 
   ngOnInit(): void {
@@ -37,4 +53,14 @@ export class ToolbarComponent implements OnInit {
     this.authDialog.openDialog(mode);
   }
 
+  onSignOutClicked() {
+    this.tokenService.signOut().subscribe(
+      res =>      this.isUserSignedIn = false,
+      error =>    console.log(error)
+    );
+  }
+
+  updateUserStatus($event: boolean) {
+    this.isUserSignedIn = $event;
+  }
 }

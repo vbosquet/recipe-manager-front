@@ -1,3 +1,4 @@
-<p-menubar [model]="items"></p-menubar>
-<app-auth-dialog #authDialog></app-auth-dialog>
+<p-menubar *ngIf="!isUserSignedIn" [model]="loggedOutItems"></p-menubar>
+<p-menubar *ngIf="isUserSignedIn" [model]="loggedInItems"></p-menubar>
+<app-auth-dialog #authDialog (onAuthSuccess)="updateUserStatus($event)"></app-auth-dialog>
 

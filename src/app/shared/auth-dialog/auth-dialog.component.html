@@ -1,4 +1,4 @@
-<p-dialog header="{{authMode}}" [(visible)]="display">
-  <app-login *ngIf="isLoginMode()" (onFormResult)="onLoginFormResult($event)"></app-login>
-  <app-register *ngIf="isRegisterMode()" (onFormResult)="onRegisterFormResult($event)"></app-register>
+<p-dialog header="{{authMode}}" [(visible)]="display" (onHide)="onCloseDialog()">
+  <app-login *ngIf="isLoginMode()" (onFormResult)="onLoginFormResult($event)" [displayDialog]="display"></app-login>
+  <app-register *ngIf="isRegisterMode()" (onFormResult)="onRegisterFormResult($event)" [displayDialog]="display"></app-register>
 </p-dialog>

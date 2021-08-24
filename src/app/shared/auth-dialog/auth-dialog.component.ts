@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AngularTokenService} from "angular-token";
 
 @Component({
   selector: 'app-auth-dialog',
@@ -9,6 +10,8 @@ export class AuthDialogComponent implements OnInit {
 
   display: boolean = false;
   authMode: string = '';
+
+  @Output() onAuthSuccess = new EventEmitter<any>();
 
   constructor() { }
 
@@ -34,13 +37,22 @@ export class AuthDialogComponent implements OnInit {
 
   onLoginFormResult($event: any) {
     if ($event.signedIn) {
+      this.onAuthSuccess.emit($event.signedIn);
       this.display = false;
+    } else {
+      alert($event.err.message)
     }
   }
 
   onRegisterFormResult($event: any) {
     if ($event.signedUp) {
       this.display = false;
+    } else {
+      alert($event.err.message)
     }
+  }
+
+  onCloseDialog() {
+    this.display = false;
   }
 }

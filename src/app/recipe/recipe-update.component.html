@@ -9,10 +9,21 @@
     <textarea class="form-control" name="description" id="field_description"
               formControlName="description" placeholder="Description" rows="5" [readOnly]="readonly"></textarea>
   </div>
+  <div formArrayName="ingredients" class="mb-3">
+    <label>Ingredients</label>
+    <ng-container *ngFor="let item of ingredientFormGroups.controls; let i = index" [formGroupName]="i">
+      <div [hidden]="isDeleted(i)" class="input-group mb-3">
+        <button *ngIf="!readonly" type="button" class="btn btn-primary" (click)="deleteIngredient(i)">Delete</button>
+        <input type="text" class="form-control" formControlName="name" placeholder="Ingredient name" [readOnly]="readonly">
+      </div>
+    </ng-container>
+  </div>
+  <button type="button" class="btn btn-primary float-right ml-1" id="button-add"
+          (click)="addIngredient()" *ngIf="!readonly">Add Ingredient</button>
   <button type="button" class="btn btn-primary float-right ml-1" (click)="save()" id="button-save"
-          [disabled]="editForm.invalid" [hidden]="readonly">Save</button>
+          [disabled]="editForm.invalid" *ngIf="!readonly">Save</button>
   <button type="button" class="btn btn-secondary float-right ml-1" id="button-cancel"
-          (click)="previousState()" [hidden]="readonly">Cancel</button>
+          (click)="previousState()" *ngIf="!readonly">Cancel</button>
   <button type="button" class="btn btn-secondary float-right ml-1" id="button-back"
-          (click)="previousState()" [hidden]="!readonly">Back</button>
+          (click)="previousState()" *ngIf="readonly">Back</button>
 </form>

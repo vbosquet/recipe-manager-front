@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {IRecipe, Recipe} from "../shared/model/recipe.model";
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {RecipeService} from "./recipe.service";
 import {take} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-recipe-update',
@@ -15,18 +15,20 @@ export class RecipeUpdateComponent implements OnInit {
 
   recipe: IRecipe = new Recipe();
   readonly: boolean = false;
+  ingredients: any[] = [];
 
   editForm = this.fb.group({
     id: [],
     title: [null, Validators.required],
-    description: [null, Validators.required]
+    description: [null, Validators.required],
+    ingredients: this.fb.array([], [])
   });
 
   constructor(private fb: FormBuilder, private recipeService: RecipeService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.data.pipe(take(1)).subscribe(({ recipe, readonly }) => {
       this.readonly = readonly;
       this.recipe = recipe;
-      console.log(recipe);
+      this.ingredients = recipe.ingredients;
       this.updateForm();
     });
   }
@@ -47,10 +49,38 @@ export class RecipeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       ...this.recipe
     });
+    if (this.ingredients) {
+      for (const ingredient of this.ingredients) {
+        (this.editForm.get('ingredients') as FormArray).push(this.fb.group(ingredient));
+      }
+    }
   }
 
   previousState() {
     window.history.back();
+  }
+
+  createItems(): FormGroup {
+    return this.fb.group({
+      id: [],
+      name: [],
+      quantity: []
+    })
+  }
+
+  addIngredient() {
+    const array: FormArray = this.editForm.get('ingredients') as FormArray;
+    if(array.length < 10) {
+      (this.editForm.get('ingredients') as FormArray).push(this.createItems())
+    }
+  }
+
+  deleteIngredient(index: number): void {
+    (this.editForm.get('ingredients') as FormArray).removeAt(index);
+  }
+
+  get ingredientFormGroups () {
+    return this.editForm.get('ingredients') as FormArray
   }
 
   protected subscribeToSaveResponse(result: Observable<IRecipe>) {
@@ -59,10 +89,12 @@ export class RecipeUpdateComponent implements OnInit {
 
   private createFromForm(): IRecipe {
     return {
-      ...new Recipe(),
-      id: this.editForm.get(['id'])?.value,
-      title: this.editForm.get(['title'])?.value,
-      description: this.editForm.get(['description'])?.value
+      ...new Recipe(
+        this.editForm.get(['id'])?.value,
+        this.editForm.get(['title'])?.value,
+        this.editForm.get(['description'])?.value,
+        this.editForm.get(['ingredients'])?.value
+      ),
     };
   }
 }

@@ -10,11 +10,16 @@ import { AppComponent } from './app.component';
 
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from "./shared/shared.module";
+import { RecipeComponent } from './recipe/recipe.component';
+import { RecipeCreateComponent } from "./recipe/recipe-create.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    RecipeComponent,
+    RecipeCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -24,8 +29,9 @@ import { SharedModule } from "./shared/shared.module";
     SharedModule,
     AngularTokenModule.forRoot({
       apiBase: 'http://localhost:3000'
-    })
-],
+    }),
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

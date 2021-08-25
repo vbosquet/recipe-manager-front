@@ -7,8 +7,7 @@ import {AngularTokenService} from "angular-token";
 
 @Component({
   selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.css']
+  templateUrl: './toolbar.component.html'
 })
 export class ToolbarComponent implements OnInit {
 
@@ -35,7 +34,7 @@ export class ToolbarComponent implements OnInit {
 
     this.loggedInItems = [
       {
-        label: 'Profile'
+        label: 'Home', routerLink: '/home'
       },
       {
         label: 'Sign Out', command: event => {

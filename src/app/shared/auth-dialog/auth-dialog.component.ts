@@ -3,8 +3,7 @@ import {AngularTokenService} from "angular-token";
 
 @Component({
   selector: 'app-auth-dialog',
-  templateUrl: './auth-dialog.component.html',
-  styleUrls: ['./auth-dialog.component.scss']
+  templateUrl: './auth-dialog.component.html'
 })
 export class AuthDialogComponent implements OnInit {
 

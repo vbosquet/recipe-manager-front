@@ -1,11 +1,11 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {AngularTokenService, SignInData} from "angular-token";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnChanges {
 
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnChanges {
 
   onSignInSubmit() {
     const user = this.createFromForm();
-    this.tokenService.signIn(user).subscribe(res => {
+    this.tokenService.signIn(user).pipe(take(1)).subscribe(res => {
       if(res.status == 200){
         this.onFormResult.emit({signedIn: true, res});
       }

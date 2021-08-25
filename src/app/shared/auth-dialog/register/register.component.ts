@@ -1,11 +1,11 @@
 import {Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AngularTokenService, RegisterData, SignInData} from "angular-token";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit, OnChanges {
 
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit, OnChanges {
 
   onSignUpSubmit() {
     const user = this.createFromForm();
-    this.tokenService.registerAccount(user).subscribe(res => {
+    this.tokenService.registerAccount(user).pipe(take(1)).subscribe(res => {
       if(res.status == "success") {
         this.onFormResult.emit({signedUp: true, res});
       }

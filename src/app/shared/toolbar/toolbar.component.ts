@@ -54,12 +54,11 @@ export class ToolbarComponent implements OnInit {
 
   onSignOutClicked() {
     this.tokenService.signOut().subscribe(
-      res =>      this.isUserSignedIn = false,
+      res =>      {
+        this.isUserSignedIn = false;
+        location.reload();
+      },
       error =>    console.log(error)
     );
-  }
-
-  updateUserStatus($event: boolean) {
-    this.isUserSignedIn = $event;
   }
 }

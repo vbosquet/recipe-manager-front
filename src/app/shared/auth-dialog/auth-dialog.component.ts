@@ -10,8 +10,6 @@ export class AuthDialogComponent implements OnInit {
   display: boolean = false;
   authMode: string = '';
 
-  @Output() onAuthSuccess = new EventEmitter<any>();
-
   constructor() { }
 
   ngOnInit(): void {
@@ -36,8 +34,7 @@ export class AuthDialogComponent implements OnInit {
 
   onLoginFormResult($event: any) {
     if ($event.signedIn) {
-      this.onAuthSuccess.emit($event.signedIn);
-      this.display = false;
+      this.refreshPage()
     } else {
       alert($event.err.message)
     }
@@ -45,7 +42,7 @@ export class AuthDialogComponent implements OnInit {
 
   onRegisterFormResult($event: any) {
     if ($event.signedUp) {
-      this.display = false;
+      this.refreshPage();
     } else {
       alert($event.err.message)
     }
@@ -53,5 +50,9 @@ export class AuthDialogComponent implements OnInit {
 
   onCloseDialog() {
     this.display = false;
+  }
+
+  refreshPage() {
+    location.reload();
   }
 }

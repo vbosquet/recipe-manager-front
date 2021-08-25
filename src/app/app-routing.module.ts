@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "./home/home.component";
-import {RecipeCreateComponent} from "./recipe/recipe-create.component";
+import {RecipeUpdateComponent} from "./recipe/recipe-update.component";
 import {AngularTokenService} from "angular-token";
+import { RecipeResolver } from "./recipe/recipe.resolver";
 
 const routes: Routes = [
   {
@@ -16,7 +17,35 @@ const routes: Routes = [
   },
   {
     path: 'recipes/new',
-    component: RecipeCreateComponent,
+    component: RecipeUpdateComponent,
+    resolve: {
+      recipe: RecipeResolver
+    },
+    data: {
+      readonly: false
+    },
+    canActivate: [AngularTokenService]
+  },
+  {
+    path: 'recipes/:id/view',
+    component: RecipeUpdateComponent,
+    resolve: {
+      recipe: RecipeResolver
+    },
+    data: {
+      readonly: true
+    },
+    canActivate: [AngularTokenService]
+  },
+  {
+    path: 'recipes/:id/edit',
+    component: RecipeUpdateComponent,
+    resolve: {
+      recipe: RecipeResolver
+    },
+    data: {
+      readonly: false
+    },
     canActivate: [AngularTokenService]
   },
 ];

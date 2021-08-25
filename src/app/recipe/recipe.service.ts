@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IRecipe } from "../shared/model/recipe.model";
 import {SERVER_API_URL} from "../app.constant";
@@ -15,7 +15,16 @@ export class RecipeService {
     return this.http.get<IRecipe>(`${this.resourceUrl}/${id}`);
   }
 
+  findAll(): Observable<IRecipe[]> {
+    return this.http.get<IRecipe[]>(`${this.resourceUrl}`);
+  }
+
   create(recipe: IRecipe): Observable<IRecipe> {
     return this.http.post<IRecipe>(`${this.resourceUrl}`, {"recipe": recipe});
   }
+
+  update(recipe: IRecipe): Observable<IRecipe> {
+    return this.http.put<IRecipe>(`${this.resourceUrl}/${recipe.id}`, {"recipe": recipe});
+  }
 }
+

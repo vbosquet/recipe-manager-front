@@ -11,6 +11,10 @@ export class RecipeService {
 
   constructor(protected http: HttpClient) {}
 
+  search(req?: any): Observable<IRecipe[]> {
+    return this.http.get<IRecipe[]>(this.resourceUrl + '/search?query=' + req);
+  }
+
   find(id: number): Observable<IRecipe> {
     return this.http.get<IRecipe>(`${this.resourceUrl}/${id}`);
   }
@@ -25,6 +29,10 @@ export class RecipeService {
 
   update(recipe: IRecipe): Observable<IRecipe> {
     return this.http.put<IRecipe>(`${this.resourceUrl}/${recipe.id}`, {"recipe": recipe});
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.resourceUrl}/${id}`);
   }
 }
 

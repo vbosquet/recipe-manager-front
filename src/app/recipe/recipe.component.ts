@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {IRecipe} from "../shared/model/recipe.model";
 import {RecipeService} from "./recipe.service";
-import { take}  from "rxjs/operators";
+import {count, take} from "rxjs/operators";
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-recipe',
@@ -20,4 +21,13 @@ export class RecipeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onDeletedButtonClicked(id: any) {
+    this.recipeService.delete(id).pipe(take(1)).subscribe(res => {
+      this.refreshPage();
+    }, error => console.log(error));
+  }
+
+  refreshPage() {
+    location.reload();
+  }
 }

@@ -12,7 +12,7 @@
   <div formArrayName="ingredients" class="mb-3">
     <label>Ingredients</label>
     <ng-container *ngFor="let item of ingredientFormGroups.controls; let i = index" [formGroupName]="i">
-      <div [hidden]="isDeleted(i)" class="input-group mb-3">
+      <div class="input-group mb-3">
         <button *ngIf="!readonly" type="button" class="btn btn-primary" (click)="deleteIngredient(i)">Delete</button>
         <input type="text" class="form-control" formControlName="name" placeholder="Ingredient name" [readOnly]="readonly">
       </div>

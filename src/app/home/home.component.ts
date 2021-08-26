@@ -5,6 +5,7 @@ import {FormBuilder} from "@angular/forms";
 import {take} from "rxjs/operators";
 import {RecipeService} from "../recipe/recipe.service";
 import {HomeService} from "./home.service";
+import {ISearchCriteria, SearchCriteria} from "../shared/model/search.model";
 
 @Component({
   selector: 'app-home',
@@ -26,9 +27,9 @@ export class HomeComponent implements OnInit {
   }
 
   search() {
-    const query: string = this.searchForm.get(['query'])?.value;
+    const query: ISearchCriteria = new SearchCriteria(this.searchForm.get(['query'])?.value);
     if (query != null) {
-      this.homeService.search(this.searchForm.get(['query'])?.value).pipe(take(1)).subscribe(res => {
+      this.homeService.search(query).pipe(take(1)).subscribe(res => {
         console.log(res);
       });
     }

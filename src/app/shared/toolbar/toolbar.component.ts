@@ -3,6 +3,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthDialogComponent } from "../auth-dialog/auth-dialog.component";
 import {AngularTokenService} from "angular-token";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class ToolbarComponent implements OnInit {
 
   @ViewChild('authDialog', { static: false }) authDialog!: AuthDialogComponent;
 
-  constructor(private tokenService: AngularTokenService) {
+  constructor(private tokenService: AngularTokenService, private router: Router) {
     this.isUserSignedIn = tokenService.userSignedIn();
     this.loggedOutItems = [
       {
@@ -56,7 +57,7 @@ export class ToolbarComponent implements OnInit {
     this.tokenService.signOut().subscribe(
       res =>      {
         this.isUserSignedIn = false;
-        location.reload();
+        this.router.navigate(['home']);
       },
       error =>    console.log(error)
     );
